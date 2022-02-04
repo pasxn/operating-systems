@@ -1,4 +1,4 @@
-// functional programming in C++
+/* functional programming in C++ */
 
 #include <iostream>
 #include <vector>
