@@ -12,7 +12,7 @@ int main(){
     int i=0;
     int numforks=0;
 
-    while(strcmp(text, "exit") || ch != EOF) {
+    while(strcmp(text, "exit") && ch != EOF) {
         printf(">");
         while((ch=getchar())!=EOF){
             switch(ch){
