@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -11,7 +12,7 @@ int main(){
     int i=0;
     int numforks=0;
 
-    while(text != "exit" && ch != EOF) {
+    while(strcmp(text, "exit") || ch != EOF) {
         printf(">");
         while((ch=getchar())!=EOF){
             switch(ch){
@@ -35,7 +36,7 @@ int main(){
         }  
         numforks++;       // remember the number of child processes created     
     }
-
+    puts("/n");
     return 0; //success
 }
 
