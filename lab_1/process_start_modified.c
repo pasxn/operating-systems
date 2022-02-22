@@ -17,7 +17,6 @@ int main(){
             switch(ch){
                 case '\n':
                     text[i]='\0';
-                    printf("%s\n",text);
                     printf(">");
                     i=0;
                     break;
