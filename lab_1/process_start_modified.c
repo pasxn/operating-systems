@@ -36,7 +36,7 @@ int main(){
         }  
         numforks++;       // remember the number of child processes created     
     }
-    puts("/n");
+    puts();
     return 0; //success
 }
 
