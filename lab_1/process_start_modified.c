@@ -11,19 +11,19 @@ int main(){
     int i=0;
     int numforks=0;
 
-    while(text != "exit" || ch != EOF) {
+    while(text != "exit" && ch != EOF) {
         printf(">");
         while((ch=getchar())!=EOF){
             switch(ch){
                 case '\n':
                     text[i]='\0';
+                    printf("%s\n",text);
                     printf(">");
                     i=0;
                     break;
                 default:
                     text[i]=ch;
                     i++;
-                    putchar(ch);
             }
         }
 
