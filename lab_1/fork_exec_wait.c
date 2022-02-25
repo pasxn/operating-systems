@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+
 int main(int argc, char * argv[]){
     //arguments for ls, will run: ls -l /bin
     char * ls_args[4] = { "ls", "-l", "/bin", NULL} ;
@@ -25,7 +26,7 @@ int main(int argc, char * argv[]){
     
         if( (pid = wait(&status)) < 0){
             perror("wait");
-_           exit(1);
+            exit(1);
         }
     
         printf("Parent: finished\n");
