@@ -15,7 +15,7 @@ int main(){
    
    pid = getpid();
  
-   printf("Child: %d: I'm the child\n", pid, c_pid);
+   printf("Child: %d: I'm the child\n", pid);
    printf("Child: sleeping for 2-seconds, then exiting with status 12\n");
  
    //sleep for 2 seconds
