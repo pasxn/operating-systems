@@ -30,8 +30,7 @@ void * doSomeThing(void *arg){
 int main(void){
     int i = 0;
     int err;
-    //[   ][   ][   ][   ][   ]
-    //          ^
+         
     while(i < 5){
         err = pthread_create(&(tid[i]), NULL, &doSomeThing, NULL);
         if (err != 0)
@@ -43,9 +42,8 @@ int main(void){
     }
     
     int j=0;
-    char arr[10];
     for(j=0;j<5;j++){
-        pthread_join(tid[j],(void **)(&arr));
+        pthread_join(tid[j], NULL);
     }
     //sleep(15);
     printf("\n main process exiting\n");
