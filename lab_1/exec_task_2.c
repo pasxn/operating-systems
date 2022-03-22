@@ -9,7 +9,6 @@
 char* ls_args[4] = {NULL, NULL, NULL, NULL};
 
 void split_text(char* input) {
-
     char * token = strtok(input, " ");
     int i = 0;
     while( token != NULL ) {
