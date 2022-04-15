@@ -1,3 +1,5 @@
+// gcc mutex.c -lpthread
+
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
