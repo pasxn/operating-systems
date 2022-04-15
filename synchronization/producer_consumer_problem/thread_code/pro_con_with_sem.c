@@ -1,4 +1,4 @@
-// gcc mutex.c -lpthread
+// gcc pro_con_with_sem.c -lpthread
 
 #include <stdio.h>
 #include <stdlib.h>
