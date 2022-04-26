@@ -1,0 +1,18 @@
+int LED_BUILTIN = 2;
+TaskHandle_t Task1;
+
+void task1(void* parameters) {
+  while(1) {
+    digitalWrite(LED_BUILTIN, HIGH);   
+    vTaskDelay(500 / portTICK_PERIOD_MS);                     
+    digitalWrite(LED_BUILTIN, LOW);    
+    vTaskDelay(500 / portTICK_PERIOD_MS);  
+  }
+}
+
+void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+  xTaskCreatePinnedToCore(task1, "Task 1", 1000, NULL, 1, &Task1, 1);  
+}
+
+void loop() {}
