@@ -1,3 +1,9 @@
+#if CONFIG_FREERTOS_UNICORE
+static const BaseType_t app_cpu = 0;
+#else
+static const BaseType_t app_cpu = 1;
+#endif
+
 int LED_BUILTIN = 2;
 TaskHandle_t Task1, Task2;
 
@@ -25,21 +31,19 @@ void task2(void* parameters) {
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   delay(1000);
-}
 
-void loop() {  
   Serial.print("Input task one delay: ");
-  while(!Serial.available());
+  while(Serial.available() <= 0);
   task_one_delay = Serial.read();  
-  delay(5000); 
+  delay(1000); 
 
   Serial.println("Input task two delay: ");
-  while(!Serial.available());
+  while(Serial.available() <= 0);
   task_two_delay = Serial.read(); 
-  delay(5000); 
+  delay(1000); 
   
   xTaskCreatePinnedToCore(task1, "Task 1", 1000, &task_one_delay, 1, &Task1, 1);  
   xTaskCreatePinnedToCore(task2, "Task 2", 1000, &task_two_delay, 1, &Task2, 1);
-
-  while(1);
 }
+
+void loop() {}

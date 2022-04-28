@@ -47,6 +47,7 @@ void startTask2(void *parameter) {
 }
 
 void setup() {
+  Serial.begin(9600);
   xTaskCreatePinnedToCore(startTask1, "Task 1", 1000, NULL, 1, &task_1, 1);  
   xTaskCreatePinnedToCore(startTask2, "Task 2", 1000, NULL, 1, &task_2, 1);
 }
