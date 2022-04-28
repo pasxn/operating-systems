@@ -26,7 +26,6 @@ void task2(void* parameters) {
 }
 
 void setup() {
-  pinMode(LED_BUILTIN, OUTPUT);
   pinMode(LED_EXTENAL, OUTPUT);
   xTaskCreatePinnedToCore(task1, "Task 1", 1000, NULL, 1, &Task1, 1);  
   xTaskCreatePinnedToCore(task2, "Task 2", 1000, NULL, 1, &Task2, 1);
