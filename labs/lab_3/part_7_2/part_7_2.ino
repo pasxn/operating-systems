@@ -49,7 +49,7 @@ void web_server(void *parameters) {
     
     if (client) {                             
       Serial.println("New Client.");          
-      String currentLine = "";                
+      String currentLine = "";                 
       
       while (client.connected()) {            
         
@@ -63,8 +63,11 @@ void web_server(void *parameters) {
               client.println("Content-type:text/html");
               client.println();
               
-              client.print("Click <a href=\"/H\">here</a> to turn the LED on pin 5 on.<br>");
-              client.print("Click <a href=\"/L\">here</a> to turn the LED on pin 5 off.<br>");
+              client.print("Click <a href=\"/H\">here</a> to turn the in built LED on.<br>");
+              client.print("Click <a href=\"/L\">here</a> to turn the in built LED off.<br>");
+
+              client.print("Click <a href=\"/N\">here</a> to turn the LED on pin 27 on.<br>");
+              client.print("Click <a href=\"/M\">here</a> to turn the LED on pin 77 off.<br>");
   
               client.println();
               break;
@@ -78,15 +81,20 @@ void web_server(void *parameters) {
           }
   
           if (currentLine.endsWith("GET /H")) {
-            digitalWrite(LED_BUILTIN, HIGH); 
-            digitalWrite(LED_EXTENAL, HIGH);               
+            digitalWrite(LED_BUILTIN, HIGH);                
           }
           
           if (currentLine.endsWith("GET /L")) {
-            digitalWrite(LED_BUILTIN, LOW);  
-            digitalWrite(LED_EXTENAL, LOW);               
+            digitalWrite(LED_BUILTIN, LOW);               
+          }
+
+          if (currentLine.endsWith("GET /N")) {
+            digitalWrite(LED_EXTENAL, HIGH);               
           }
           
+          if (currentLine.endsWith("GET /M")) { 
+            digitalWrite(LED_EXTENAL, LOW);               
+          }
         }
       }
       
