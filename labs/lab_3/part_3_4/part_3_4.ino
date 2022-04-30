@@ -32,6 +32,8 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   delay(1000);
 
+  Serial.begin(9600);
+
   Serial.print("Input task one delay: ");
   while(Serial.available() <= 0);
   task_one_delay = Serial.read();  
