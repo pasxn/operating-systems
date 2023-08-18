@@ -34,7 +34,7 @@ int main(void) {
    
   sum = Global_sum(my_int, my_rank, comm_sz, comm);
    
-  if ( my_rank == 0) {
+  if (my_rank == 0) {
     all_ints = malloc(comm_sz*sizeof(int));
     /* Gather from each process each my_int to send back to process 0 to store all summands in array all_ints*/
     MPI_Gather(&my_int, 1, MPI_INT, all_ints, 1, MPI_INT, 0, MPI_COMM_WORLD);
