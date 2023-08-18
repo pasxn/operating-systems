@@ -1,4 +1,4 @@
 #!/bin/bash
 
-gcc gemm.c -pthread
-DEBUG=$3 ./a.out $1 $2
+gcc $1 -pthread
+DEBUG=$4 ./a.out $2 $3

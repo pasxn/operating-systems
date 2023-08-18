@@ -78,7 +78,7 @@ void print_matrix(int* matrix, int rows, int cols) {
   }
 }
 
-void main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
   srand(time(NULL));
 
   char *debugValue = getenv("DEBUG");
@@ -87,6 +87,11 @@ void main(int argc, char *argv[]) {
   long elapsed_nanoseconds_st, elapsed_nanoseconds_mt;
 
   int num_cpu = sysconf(_SC_NPROCESSORS_ONLN);
+
+  if (argc < 3) {
+    perror("comand line arguments are not entered");
+    return 1;
+  }
 
   const int rows = atoi(argv[1]);
   const int cols = atoi(argv[2]);
@@ -97,15 +102,15 @@ void main(int argc, char *argv[]) {
 
   for (int i = 0; i < rows; ++i) {
     for (int j = 0; j < cols; ++j) {
-      // random numbers between 0 and 99
-      a[i][j] = rand() % 100;
+      // random numbers between 0 and 9
+      a[i][j] = rand() % 10;
     }
   }
 
   for (int i = 0; i < cols; ++i) {
     for (int j = 0; j < rows; ++j) {
-      // random numbers between 0 and 99
-      b[i][j] = rand() % 100;
+      // random numbers between 0 and 9
+      b[i][j] = rand() % 10;
     }
   }
 
@@ -139,4 +144,6 @@ void main(int argc, char *argv[]) {
 
   printf("elapsed eime (single threaded): %ld ms\n", elapsed_nanoseconds_st/1000000);
   printf("elapsed eime (multi threaded) : %ld ms\n", elapsed_nanoseconds_mt/1000000);
+
+  return 0;
 }
