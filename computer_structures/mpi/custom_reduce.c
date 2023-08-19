@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
   MPI_Comm_size(comm, &comm_size);
   MPI_Comm_rank(comm, &my_rank);
 
-  int scatter_size = len/(num_cpus-1);
+  int scatter_size = len/(num_cpus);
 
   if(my_rank != 0) {
     int start = (my_rank - 1)*scatter_size;
