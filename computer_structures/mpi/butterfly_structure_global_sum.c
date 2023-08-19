@@ -39,24 +39,29 @@ int main(void) {
    if (my_rank == 0) {
       all_ints = malloc(comm_sz*sizeof(int)); 
       sum_proc = malloc(comm_sz*sizeof(int));
+      
       /* Gather from each process each my_int to send back to process 0 to store all summands in array all_ints */
       MPI_Gather(&my_int, 1, MPI_INT, all_ints, 1, MPI_INT, 0, MPI_COMM_WORLD);
+      
       printf("Ints being summed:\n   ");
       for (i = 0; i < comm_sz; i++)
          printf("%d ", all_ints[i]);
       printf("\n");
+      
       /* Gather from each process each sum to send back to process 0 and store each processes' sum in array sum_proc */
       MPI_Gather(&sum, 1, MPI_INT, sum_proc, 1, MPI_INT, 0, MPI_COMM_WORLD);
+      
       printf("Sums on the processes:\n   ");
       for (i = 0; i < comm_sz; i++)
          printf("%d ", sum_proc[i]);
       printf("\n");
+      
       free(all_ints);
    } else {
-   	MPI_Gather(&my_int, 1, MPI_INT, all_ints, 1, MPI_INT, 0, MPI_COMM_WORLD);
-   	MPI_Gather(&sum, 1, MPI_INT, sum_proc, 1, MPI_INT, 0, MPI_COMM_WORLD);
       /* Gather from each process each my_int to send back to process 0 and store all summands in array all_ints */
       /* Gather from each process each sum to send back to process 0 and store each processes' sum in array sum_proc */
+   	MPI_Gather(&my_int, 1, MPI_INT, all_ints, 1, MPI_INT, 0, MPI_COMM_WORLD);
+   	MPI_Gather(&sum, 1, MPI_INT, sum_proc, 1, MPI_INT, 0, MPI_COMM_WORLD);      
    }
    
    MPI_Finalize();
@@ -84,13 +89,17 @@ int Global_sum(
    /* Get values from processes with rank >= floor_log_p */
    if (my_rank >= floor_log_p) {
       partner = my_rank - floor_log_p;
-      MPI_Send(&my_sum, 1, MPI_INT, partner, 0, MPI_COMM_WORLD);
+
       /* Send value in my_sum to partner process */
+      MPI_Send(&my_sum, 1, MPI_INT, partner, 0, MPI_COMM_WORLD);
+
    } else {
       partner = my_rank + floor_log_p;
       if (partner < comm_sz) {
-      	MPI_Recv(&recvtemp, 1, MPI_INT, partner, 0, MPI_COMM_WORLD, &status);
-         /* Recv value from partner into recvtemp */ 
+      	
+         /* Recv value from partner into recvtemp */
+         MPI_Recv(&recvtemp, 1, MPI_INT, partner, 0, MPI_COMM_WORLD, &status);
+
          my_sum += recvtemp;
       }
    }
@@ -99,9 +108,10 @@ int Global_sum(
    if (my_rank < floor_log_p)
       while (bitmask < floor_log_p) {
          partner = my_rank ^ bitmask;
-         MPI_Send(&my_sum, 1, MPI_INT, partner, 0, MPI_COMM_WORLD);
-         MPI_Recv(&recvtemp, 1, MPI_INT, partner, 0, MPI_COMM_WORLD, &status);
-         /* Send value from my_sum to partner process and receive value from partner into recvtemp */ 
+
+         /* Send value from my_sum to partner process and receive value from partner into recvtemp */
+         MPI_Sendrecv(&my_sum, 1, MPI_INT, partner, 0, &recvtemp, 1, MPI_INT, partner, 0, MPI_COMM_WORLD, &status);
+
          my_sum += recvtemp;
          bitmask <<= 1;
       }  /* while */
@@ -109,13 +119,15 @@ int Global_sum(
    /* Send result to processes with rank >= floor_log_p */
    if (my_rank >= floor_log_p) {
       partner = my_rank - floor_log_p;
-      MPI_Recv(&my_sum, 1, MPI_INT, partner, 0, MPI_COMM_WORLD, &status);
+
       /* Recv value from partner into my_sum */
+      MPI_Recv(&my_sum, 1, MPI_INT, partner, 0, MPI_COMM_WORLD, &status);
+
    } else {
       partner = my_rank + floor_log_p;
       if (partner < comm_sz)
-          MPI_Send(&my_sum, 1, MPI_INT, partner, 0, MPI_COMM_WORLD);
          /* Send value in my_sum to partner process */
+         MPI_Send(&my_sum, 1, MPI_INT, partner, 0, MPI_COMM_WORLD);
    }
 
    return my_sum;
