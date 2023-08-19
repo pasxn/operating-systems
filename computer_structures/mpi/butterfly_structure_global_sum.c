@@ -60,8 +60,8 @@ int main(void) {
    } else {
       /* Gather from each process each my_int to send back to process 0 and store all summands in array all_ints */
       /* Gather from each process each sum to send back to process 0 and store each processes' sum in array sum_proc */
-   	MPI_Gather(&my_int, 1, MPI_INT, all_ints, 1, MPI_INT, 0, MPI_COMM_WORLD);
-   	MPI_Gather(&sum, 1, MPI_INT, sum_proc, 1, MPI_INT, 0, MPI_COMM_WORLD);      
+      MPI_Gather(&my_int, 1, MPI_INT, all_ints, 1, MPI_INT, 0, MPI_COMM_WORLD);
+      MPI_Gather(&sum, 1, MPI_INT, sum_proc, 1, MPI_INT, 0, MPI_COMM_WORLD);     
    }
    
    MPI_Finalize();
