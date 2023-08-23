@@ -82,7 +82,7 @@ int Global_sum(
    
    int partner, recvtemp;
    int my_sum = my_int;
-   unsigned bitmask = 1;
+   unsigned int bitmask = 1;
    int floor_log_p = Floor_log(comm_sz);
    MPI_Status status;
 

@@ -71,7 +71,7 @@ int Global_sum(
    
   int partner, recvtemp;
   int my_sum = my_int;
-  unsigned bitmask = 1;
+  unsigned int bitmask = 1;
    
   while (bitmask < comm_sz) {
     partner = my_rank ^ bitmask;
