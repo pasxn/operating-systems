@@ -37,8 +37,8 @@ int main(void) {
    sum = Global_sum(my_int, my_rank, comm_sz, comm);
    
    if (my_rank == 0) {
-      all_ints = malloc(comm_sz*sizeof(int)); 
-      sum_proc = malloc(comm_sz*sizeof(int));
+      all_ints = malloc(sizeof(int) * comm_sz); 
+      sum_proc = malloc(sizeof(int) * comm_sz);
       
       /* Gather from each process each my_int to send back to process 0 to store all summands in array all_ints */
       MPI_Gather(&my_int, 1, MPI_INT, all_ints, 1, MPI_INT, 0, MPI_COMM_WORLD);
@@ -57,11 +57,12 @@ int main(void) {
       printf("\n");
       
       free(all_ints);
+      free(sum_proc);
    } else {
       /* Gather from each process each my_int to send back to process 0 and store all summands in array all_ints */
       /* Gather from each process each sum to send back to process 0 and store each processes' sum in array sum_proc */
       MPI_Gather(&my_int, 1, MPI_INT, all_ints, 1, MPI_INT, 0, MPI_COMM_WORLD);
-      MPI_Gather(&sum, 1, MPI_INT, sum_proc, 1, MPI_INT, 0, MPI_COMM_WORLD);     
+      MPI_Gather(&sum, 1, MPI_INT, sum_proc, 1, MPI_INT, 0, MPI_COMM_WORLD);   
    }
    
    MPI_Finalize();
