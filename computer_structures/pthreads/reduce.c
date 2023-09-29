@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include <unistd.h>
 #include <pthread.h>
 
@@ -30,7 +29,7 @@ void reduce_mt(int* a, int a_len, int* c, const int num_threads) {
   thread_data td[num_threads];
   int range = a_len/num_threads;
 
-  for(int i = 0; i < num_threads; i++) {
+  for (int i = 0; i < num_threads; i++) {
     td[i].a = a;
     td[i].answer = c;
     td[i].start = range * i;
