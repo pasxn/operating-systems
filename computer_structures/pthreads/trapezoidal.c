@@ -112,19 +112,19 @@ void* thread_work(void* rank) {
     case 2:
 	    /* semaphore critical section to add local integral to total */
       sem_wait(&sem);
-      total =+ my_int;
+      total += my_int;
       sem_post(&sem);
 	    break;
 	  case 3:
 	    /* busy-wait critical section to add local integral to total */
       while (__sync_lock_test_and_set(&flag, 1) == 1);
-      total =+ my_int;
+      total += my_int;
       __sync_lock_release(&flag);
 	    break;
 	  default:
 	    /* mutex critical section to add local integral to total */
       pthread_mutex_lock(&mutex);
-      total =+ my_int;
+      total += my_int;
       pthread_mutex_unlock(&mutex);
 	    break;
     }

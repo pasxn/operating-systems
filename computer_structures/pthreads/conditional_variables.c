@@ -42,14 +42,12 @@ void* inc_count(void* t) {
     reached. Note that this occurs while mutex is locked.
     */
     if (count == COUNT_LIMIT) {
-      printf("inc_count(): thread %ld, count = %d Threshold reached. ",
-      my_id, count);
+      printf("inc_count(): thread %ld, count = %d Threshold reached. ", my_id, count);
       pthread_cond_signal(&count_threshold_cv);
       printf("Just sent signal.\n");
     }
     
-    printf("inc_count(): thread %ld, count = %d, unlocking mutex\n",
-    my_id, count);
+    printf("inc_count(): thread %ld, count = %d, unlocking mutex\n", my_id, count);
     pthread_mutex_unlock(&count_mutex);
 
     /* Do some work so threads can alternate on mutex lock */
@@ -89,14 +87,14 @@ void* watch_count(void* t) {
   pthread_exit(NULL);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   int i, rc;
   long t1 = 1, t2 = 2, t3 = 3;
   pthread_t threads[3];
   
   /* Initialize mutex and condition variable objects */
   pthread_mutex_init(&count_mutex, NULL);
-  pthread_cond_init (&count_threshold_cv, NULL);
+  pthread_cond_init(&count_threshold_cv, NULL);
   
   /* For portability, explicitly create threads in a joinable state */
   pthread_create(&threads[0], NULL, watch_count, (void*)t1);
@@ -108,10 +106,10 @@ int main(int argc, char *argv[]) {
     pthread_join(threads[i], NULL);
   }
 
-  printf ("Main(): Waited and joined with %d threads. Final value of count = %d. Done.\n", NUM_THREADS, count);
+  printf("Main(): Waited and joined with %d threads. Final value of count = %d. Done.\n", NUM_THREADS, count);
   
   /* Clean up and exit */
   pthread_mutex_destroy(&count_mutex);
   pthread_cond_destroy(&count_threshold_cv);
-  pthread_exit (NULL);
+  pthread_exit(NULL);
 }
