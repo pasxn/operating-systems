@@ -1,13 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <omp.h>
 
 #define NUM_THREADS 8
 
 
 long long int Parallelize(long long int local_number_of_tosses);
-long long int Monte_carlo(long long number_of_tosses);
+long long int Monte_carlo(long long number_of_tosses, int tid);
 
 int main(void) {
   long long int number_of_tosses;
@@ -30,13 +29,13 @@ int main(void) {
   return 0;
 }
 
-long long int Monte_carlo(long long local_number_of_tosses) {
+long long int Monte_carlo(long long local_number_of_tosses, int tid) {
   long long int i;
   double x,y;
   double distance_squared;
   long long int local_number_in_circle = 0;
 
-  srandom(time(NULL));
+  srandom(tid + 1);
 
   for ( i=0 ; i< local_number_of_tosses ; i++) {
     x = (double)random()/RAND_MAX; /* x= random between -1 and 1 */
@@ -51,19 +50,17 @@ long long int Monte_carlo(long long local_number_of_tosses) {
     }
   }
 
-  printf("%lld\n", local_number_in_circle);
-
   return local_number_in_circle;
 }
 
 long long int Parallelize(long long int local_number_of_tosses) {
   
-  long long int number_in_circle;
+  long long int number_in_circle = 0;
 
   #pragma omp parallel num_threads(NUM_THREADS)
   {
     #pragma omp critical
-    number_in_circle += Monte_carlo(local_number_of_tosses);
+    number_in_circle += Monte_carlo(local_number_of_tosses, omp_get_thread_num());
   }
 
   return number_in_circle;
