@@ -37,7 +37,7 @@ long long int Monte_carlo(long long local_number_of_tosses, int tid) {
 
   srandom(tid + 1);
 
-  for ( i=0 ; i< local_number_of_tosses ; i++) {
+  for ( i=0 ; i < local_number_of_tosses ; i++) {
     x = (double)random()/RAND_MAX; /* x= random between -1 and 1 */
     y = (double)random()/RAND_MAX; /* y= random between -1 and 1 */
 
