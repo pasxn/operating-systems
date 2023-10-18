@@ -16,7 +16,7 @@ int main(void) {
 
   double pi_estimate;
 
-  printf("Enter the total number of tosses\n");
+  printf("Enter the total number of tosses: ");
   scanf("%lld", &number_of_tosses);
 
   local_number_of_tosses = number_of_tosses/NUM_THREADS;
@@ -24,14 +24,14 @@ int main(void) {
   number_in_circle = Parallelize(local_number_of_tosses);
   
   pi_estimate = 4 * number_in_circle/((double)number_of_tosses);
-  printf("pi estimate = %f\n", pi_estimate);
+  printf("pi estimate: %f\n", pi_estimate);
 
   return 0;
 }
 
 long long int Monte_carlo(long long local_number_of_tosses, int tid) {
   long long int i;
-  double x,y;
+  double x, y;
   double distance_squared;
   long long int local_number_in_circle = 0;
 
